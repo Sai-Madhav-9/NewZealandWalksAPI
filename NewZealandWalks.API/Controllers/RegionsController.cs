@@ -5,6 +5,7 @@ namespace NewZealandWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //regions controller
     public class RegionsController : ControllerBase
     {
     }
