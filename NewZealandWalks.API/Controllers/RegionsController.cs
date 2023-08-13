@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewZealandWalks.API.Data;
 
 namespace NewZealandWalks.API.Controllers
 {
@@ -8,5 +9,12 @@ namespace NewZealandWalks.API.Controllers
     //regions controller
     public class RegionsController : ControllerBase
     {
+        private readonly NZWalksDbContext dbContext;
+        public RegionsController()
+        {
+
+        }
+
     }
+
 }
