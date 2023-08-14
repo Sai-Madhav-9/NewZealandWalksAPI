@@ -10,9 +10,17 @@ namespace NewZealandWalks.API.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
-        public RegionsController()
+        public RegionsController(NZWalksDbContext dbContext)
         {
+            this.dbContext = dbContext;
+        }
 
+        [HttpGet]
+
+        public IActionResult GetAllRegions()
+        {
+            var regions = dbContext.Regions.ToList();
+            return Ok(regions);
         }
 
     }
