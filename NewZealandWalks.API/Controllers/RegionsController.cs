@@ -23,6 +23,10 @@ namespace NewZealandWalks.API.Controllers
             return Ok(regions);
         }
 
+        [HttpGet]
+        []
+        public IActionResult GetRegionsById() { }
+
     }
 
 }
