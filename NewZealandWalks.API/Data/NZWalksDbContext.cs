@@ -14,5 +14,9 @@ namespace NewZealandWalks.API.Data
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walk> Walks { get; set; }
 
+        internal void AttachAsync(Region regionDomainModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
