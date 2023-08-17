@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NewZealandWalks.API.Data;
+using NewZealandWalks.API.Mappings;
 using NewZealandWalks.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("madhavConnection
 
 //ela
 builder.Services.AddScoped<IRegionRepository,SQLRegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
