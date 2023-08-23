@@ -17,6 +17,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("madhavConnection
 
 //ela
 builder.Services.AddScoped<IRegionRepository,SQLRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 

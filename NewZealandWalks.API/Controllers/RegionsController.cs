@@ -70,29 +70,32 @@ namespace NewZealandWalks.API.Controllers
                 RegionImageUrl = regionsDomain.RegionImageUrl,
 
             }); */
-            var regionsDto = mapper.Map<List<RegionDto>>(regionsDomain);
+            var regionsDto = mapper.Map<RegionDto>(regionsDomain);
             return Ok(regionsDto);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto addRegionRequestDto) {
 
-            var RegionDomainModel = new Region
+            var RegionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+                /* new Region
             {
                 Code = addRegionRequestDto.Code,
                 Name = addRegionRequestDto.Name,
                 RegionImageUrl= addRegionRequestDto.RegionImageUrl,
-            };
+            };*/
             await regionRepository.CreateRegionAsync(RegionDomainModel);
 
             // just to pass whole info remapping again
-            var regionDto = new RegionDto
+            var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
+
+                /*new RegionDto
             {
                 Id = RegionDomainModel.Id,
                 Code = RegionDomainModel.Code,
                 Name = RegionDomainModel.Name,
                 RegionImageUrl = RegionDomainModel.RegionImageUrl,
-            };
+            };*/
             return CreatedAtAction(nameof(CreateRegion),new { id = RegionDomainModel.Id }, regionDto);
         }
 
@@ -102,13 +105,14 @@ namespace NewZealandWalks.API.Controllers
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddRegionRequestDto addRegionRequestDto)
            {
 
-            var RegionDomainModel = new Region
+            var RegionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+                /*new Region
             {
                 Id= id,
                 Code= addRegionRequestDto.Code,
                 Name= addRegionRequestDto.Name,
                 RegionImageUrl= addRegionRequestDto.RegionImageUrl
-            };
+            };*/
             RegionDomainModel = await regionRepository.UpdateRegionAsync(id, RegionDomainModel);
 
             if (RegionDomainModel == null)
@@ -116,13 +120,14 @@ namespace NewZealandWalks.API.Controllers
                 return NotFound();
             }
 
-            var regionDto = new RegionDto
+            var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
+                /*new RegionDto
             {
                 Id = RegionDomainModel.Id,
                 Code = RegionDomainModel.Code,
                 Name = RegionDomainModel.Name,
                 RegionImageUrl = RegionDomainModel.RegionImageUrl,
-            };
+            };*/
 
             return Ok(regionDto);
 
@@ -140,13 +145,14 @@ namespace NewZealandWalks.API.Controllers
             }
 
 
-            var regionDto = new RegionDto
+            var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
+                /*new RegionDto
             {
                 Id= RegionDomainModel.Id,
                 Code = RegionDomainModel.Code,
                 Name = RegionDomainModel.Name,
                 RegionImageUrl = RegionDomainModel.RegionImageUrl,
-            };
+            };*/
 
 
             return Ok(regionDto);
