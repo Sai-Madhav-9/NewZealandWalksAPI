@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using NewZealandWalks.API.CustomFilter;
 using NewZealandWalks.API.Data;
 using NewZealandWalks.API.Models.Domain;
 using NewZealandWalks.API.Models.DTO;
@@ -31,22 +32,26 @@ namespace NewZealandWalks.API.Controllers
 
         public async Task<IActionResult> GetAllRegions()
         {
-            var regionsDomain = await regionRepository.GetAllAsync();
-            /*  var regionsDto = new List<RegionDto>();
 
-              foreach (var regionDomain in regionsDomain)
-              {
-                  regionsDto.Add(new RegionDto()
+                var regionsDomain = await regionRepository.GetAllAsync();
+                /*  var regionsDto = new List<RegionDto>();
+
+                  foreach (var regionDomain in regionsDomain)
                   {
-                      Id = regionDomain.Id,
-                      Code = regionDomain.Code,
-                      Name = regionDomain.Name,
-                      RegionImageUrl = regionDomain.RegionImageUrl,
+                      regionsDto.Add(new RegionDto()
+                      {
+                          Id = regionDomain.Id,
+                          Code = regionDomain.Code,
+                          Name = regionDomain.Name,
+                          RegionImageUrl = regionDomain.RegionImageUrl,
 
-                  });
-              } */
-            var regionsDto = mapper.Map<List<RegionDto>>(regionsDomain);
-            return Ok(regionsDto);
+                      });
+                  } */
+                var regionsDto = mapper.Map<List<RegionDto>>(regionsDomain);
+                return Ok(regionsDto);
+
+
+
         }
 
         [HttpGet]
@@ -75,19 +80,21 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionRequestDto addRegionRequestDto) {
 
-            var RegionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+
+                var RegionDomainModel = mapper.Map<Region>(addRegionRequestDto);
                 /* new Region
             {
                 Code = addRegionRequestDto.Code,
                 Name = addRegionRequestDto.Name,
                 RegionImageUrl= addRegionRequestDto.RegionImageUrl,
             };*/
-            await regionRepository.CreateRegionAsync(RegionDomainModel);
+                await regionRepository.CreateRegionAsync(RegionDomainModel);
 
-            // just to pass whole info remapping again
-            var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
+                // just to pass whole info remapping again
+                var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
 
                 /*new RegionDto
             {
@@ -96,16 +103,20 @@ namespace NewZealandWalks.API.Controllers
                 Name = RegionDomainModel.Name,
                 RegionImageUrl = RegionDomainModel.RegionImageUrl,
             };*/
-            return CreatedAtAction(nameof(CreateRegion),new { id = RegionDomainModel.Id }, regionDto);
+                return CreatedAtAction(nameof(CreateRegion), new { id = RegionDomainModel.Id }, regionDto);
+
+
+
+              
         }
 
         [HttpPut]
         [Route("{id:Guid}")]
-
+        [ValidateModel]
         public async Task<IActionResult> UpdateRegion([FromRoute] Guid id, [FromBody] AddRegionRequestDto addRegionRequestDto)
            {
-
-            var RegionDomainModel = mapper.Map<Region>(addRegionRequestDto);
+ 
+                var RegionDomainModel = mapper.Map<Region>(addRegionRequestDto);
                 /*new Region
             {
                 Id= id,
@@ -113,14 +124,14 @@ namespace NewZealandWalks.API.Controllers
                 Name= addRegionRequestDto.Name,
                 RegionImageUrl= addRegionRequestDto.RegionImageUrl
             };*/
-            RegionDomainModel = await regionRepository.UpdateRegionAsync(id, RegionDomainModel);
+                RegionDomainModel = await regionRepository.UpdateRegionAsync(id, RegionDomainModel);
 
-            if (RegionDomainModel == null)
-            {
-                return NotFound();
-            }
+                if (RegionDomainModel == null)
+                {
+                    return NotFound();
+                }
 
-            var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
+                var regionDto = mapper.Map<RegionDto>(RegionDomainModel);
                 /*new RegionDto
             {
                 Id = RegionDomainModel.Id,
@@ -129,7 +140,11 @@ namespace NewZealandWalks.API.Controllers
                 RegionImageUrl = RegionDomainModel.RegionImageUrl,
             };*/
 
-            return Ok(regionDto);
+                return Ok(regionDto);
+
+
+
+            
 
         }
 
