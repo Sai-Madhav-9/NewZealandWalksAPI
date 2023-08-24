@@ -5,6 +5,7 @@ using NewZealandWalks.API.CustomFilter;
 using NewZealandWalks.API.Models.Domain;
 using NewZealandWalks.API.Models.DTO;
 using NewZealandWalks.API.Repositories;
+using System.Diagnostics.Eventing.Reader;
 using System.Net.WebSockets;
 
 namespace NewZealandWalks.API.Controllers
@@ -38,13 +39,15 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllWalks()
+        public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy , [FromQuery] bool isAscending
+            , [FromQuery] int pageNumber=1 , [FromQuery] int pageSize =1000)
         {
-            var walksDomainModel = await walkRepository.GetAllAsync();
+            var walksDomainModel = await walkRepository.GetAllAsync(filterOn,filterQuery, sortBy, isAscending, pageNumber, pageSize);
             
             return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
         }
-
+        
         [HttpGet]
         [Route("{id:Guid}")]
 
@@ -62,10 +65,10 @@ namespace NewZealandWalks.API.Controllers
         [HttpPut]
 
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> UpdateWalk([FromRoute] Guid id, AddWalksRequestDto addWalksRequestDto)
         {
-            if (ModelState.IsValid)
-            {
+
                 var walkDomainModel = mapper.Map<Walk>(addWalksRequestDto);
 
                 walkDomainModel = await walkRepository.UpdateAsync(id, walkDomainModel);
@@ -75,8 +78,7 @@ namespace NewZealandWalks.API.Controllers
                 }
 
                 return Ok(mapper.Map<WalkDto>(walkDomainModel));
-            }
-            return BadRequest(ModelState);
+
 
         }
 
