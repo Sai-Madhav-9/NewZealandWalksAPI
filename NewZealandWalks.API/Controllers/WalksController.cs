@@ -13,7 +13,7 @@ namespace NewZealandWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class WalksController : ControllerBase
 
     {
@@ -29,6 +29,7 @@ namespace NewZealandWalks.API.Controllers
         [HttpPost]
 
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateWalk([FromBody] AddWalksRequestDto addWalksRequestDto)
         {
 
@@ -41,6 +42,7 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllWalks([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy , [FromQuery] bool isAscending
             , [FromQuery] int pageNumber=1 , [FromQuery] int pageSize =1000)
@@ -52,7 +54,7 @@ namespace NewZealandWalks.API.Controllers
         
         [HttpGet]
         [Route("{id:Guid}")]
-
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetWalkById([FromRoute] Guid id)
         {
             var walkDomainModel = await walkRepository.GetByIdAsync(id);
@@ -68,6 +70,7 @@ namespace NewZealandWalks.API.Controllers
 
         [Route("{id:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateWalk([FromRoute] Guid id, AddWalksRequestDto addWalksRequestDto)
         {
 
@@ -86,7 +89,7 @@ namespace NewZealandWalks.API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
-
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deleteWalkDomainModel = await walkRepository.DeleteAsync(id);

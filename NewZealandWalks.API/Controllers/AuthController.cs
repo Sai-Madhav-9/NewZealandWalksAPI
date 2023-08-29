@@ -66,11 +66,14 @@ namespace NewZealandWalks.API.Controllers
                     var roles = await userManager.GetRolesAsync(user);
                     if (roles != null)
                     {
-                        var jwtToken =  tokenRepository.CreateJWTToken(user, roles.ToList());
+                        var rolesList = roles.ToList();
+                        var jwtToken =  tokenRepository.CreateJWTToken(user, rolesList);
                         var response = new LoginResponseDto
                         {
                             JwtToken = jwtToken
                         };
+
+
                         return Ok(response);
                     }
                     

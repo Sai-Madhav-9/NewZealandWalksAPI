@@ -12,7 +12,7 @@ using NewZealandWalks.API.Data;
 namespace NewZealandWalks.API.Migrations.NZWalksAuthDb
 {
     [DbContext(typeof(NZWalksAuthDbContext))]
-    [Migration("20230828202329_Creating the Authorization Database")]
+    [Migration("20230829004325_Creating the Authorization Database")]
     partial class CreatingtheAuthorizationDatabase
     {
         /// <inheritdoc />
@@ -56,12 +56,14 @@ namespace NewZealandWalks.API.Migrations.NZWalksAuthDb
                         {
                             Id = "09f67f67bcad423791a1b1d95c16f1c0",
                             ConcurrencyStamp = "09f67f67bcad423791a1b1d95c16f1c0",
+                            Name = "Reader",
                             NormalizedName = "READER"
                         },
                         new
                         {
                             Id = "0f8598fa457f43dea5ec3016f46c82b2",
                             ConcurrencyStamp = "0f8598fa457f43dea5ec3016f46c82b2",
+                            Name = "Writer",
                             NormalizedName = "WRITER"
                         });
                 });

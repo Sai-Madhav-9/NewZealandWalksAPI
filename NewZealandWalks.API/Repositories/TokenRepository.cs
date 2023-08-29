@@ -35,8 +35,7 @@ namespace NewZealandWalks.API.Repositories
                 configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: credentials
-                );
+                signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

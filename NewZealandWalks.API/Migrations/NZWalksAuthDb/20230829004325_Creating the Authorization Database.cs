@@ -163,8 +163,8 @@ namespace NewZealandWalks.API.Migrations.NZWalksAuthDb
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "09f67f67bcad423791a1b1d95c16f1c0", "09f67f67bcad423791a1b1d95c16f1c0", null, "READER" },
-                    { "0f8598fa457f43dea5ec3016f46c82b2", "0f8598fa457f43dea5ec3016f46c82b2", null, "WRITER" }
+                    { "09f67f67bcad423791a1b1d95c16f1c0", "09f67f67bcad423791a1b1d95c16f1c0", "Reader", "READER" },
+                    { "0f8598fa457f43dea5ec3016f46c82b2", "0f8598fa457f43dea5ec3016f46c82b2", "Writer", "WRITER" }
                 });
 
             migrationBuilder.CreateIndex(

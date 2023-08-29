@@ -24,6 +24,7 @@ namespace NewZealandWalks.API.Data
                 {
                     Id =readerRoleId,
                     ConcurrencyStamp = readerRoleId,
+                    Name = "Reader",
                     NormalizedName = "Reader".ToUpper()
                 },
 
@@ -31,6 +32,7 @@ namespace NewZealandWalks.API.Data
                 {
                     Id =writerRoleId,
                     ConcurrencyStamp = writerRoleId,
+                    Name = "Writer",
                     NormalizedName = "Writer".ToUpper()
                 },
 
