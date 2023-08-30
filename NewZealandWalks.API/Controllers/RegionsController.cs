@@ -34,7 +34,7 @@ namespace NewZealandWalks.API.Controllers
         }
 
         [HttpGet]
-        
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAllRegions()
         {
             logger.LogInformation("GetAll action method is invoked");
